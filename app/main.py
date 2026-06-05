@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from datetime import datetime
+import uvicorn
 
 app = FastAPI(
     title="Employee Management API",
