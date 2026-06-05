@@ -1,6 +1,24 @@
-FROM python:3.13-slim
+FROM python:3.14-slim AS builder
+
 WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir --target=/deps -r requirements.txt
+
 COPY . /app
-RUN pip install fastapi uvicorn
+
+
+FROM cgr.dev/chainguard/python:latest
+
+WORKDIR /app
+
+COPY --from=builder /deps /deps
+COPY --from=builder /app /app
+
+ENV PYTHONPATH=/deps
+
 EXPOSE 8000
-CMD ["python", "app/main.py"]
+
+CMD ["app/main.py"]
+                   
