@@ -70,3 +70,5 @@ def search_employee(name: str):
     return {
         "message": f"Searching employee: {name}"
     }
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
